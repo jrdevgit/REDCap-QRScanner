@@ -1,0 +1,86 @@
+{
+	"name": "QRScanner",
+
+	"namespace": "MCRI\\QRScanner",
+
+	"authors": [
+		{
+			"name": "Jack Ren",
+			"email": "jack.ren@mcri.edu.au",
+			"institution": "Murdoch Children's Research Institute"
+		}
+	],
+
+	"description": "This module allows REDCap to scan and decode QR images",
+
+	"permissions": [
+            "redcap_data_entry_form_top",
+            "redcap_survey_page_top"
+		],
+	"project-settings": [
+		{
+			"name": "Settings for each instrument",
+			"key": "instrument_settings",
+			"type": "sub_settings",
+			"repeatable": true,
+			"sub_settings": [
+				{
+					"name": "Select which instrument to add the scanner functionality",
+					"key": "scanner_instrument",
+					"type": "form-list"
+				},
+				{
+					"name": "Select which descriptive field to append the camera selection (This field will NOT work with the Shazam module)",
+					"key": "scanner_camera",
+					"required": true,
+					"type": "field-list"
+				}
+			]
+		},
+		{
+			"name": "Scanner settings",
+			"key": "scanner_settings",
+			"repeatable": true,
+			"type": "sub_settings",
+			"sub_settings": [
+				{
+					"name": "Select which field to attach a QR camera (Must be a text/notes field)",
+					"key": "scanner_field",
+					"required": true,
+					"type": "field-list"
+				},
+				{
+					"name": "Camera Width (px)",
+					"key": "scanner_width",
+					"required": true,
+					"type": "text"
+				},
+				{
+					"name": "Camera Height (px)",
+					"key": "scanner_height",
+					"required": true,
+					"type": "text"
+				},
+				{
+					"name": "Add 'startswith' validation",
+					"key": "scanner_startswith",
+					"repeatable": true,
+					"type": "text"
+				},
+				{
+					"name": "Add length validation (Must be an integer value)",
+					"key": "scanner_length",
+					"type": "text"
+				},
+				{
+					"name": "Select which field to attach the field to log the time of scanning",
+					"key": "scanner_time",
+					"type": "field-list"
+				}
+			]
+		}
+	],
+    "compatibility": {
+        "redcap-version-min": "8.0.3"
+    }
+}
