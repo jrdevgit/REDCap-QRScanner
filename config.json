@@ -44,7 +44,7 @@
 			"type": "sub_settings",
 			"sub_settings": [
 				{
-					"name": "Select which field to attach a QR camera (Must be a text/notes field)",
+					"name": "Select which field to attach a QR camera (Must be a text field)",
 					"key": "scanner_field",
 					"required": true,
 					"type": "field-list"

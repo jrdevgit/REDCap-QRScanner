@@ -26,7 +26,7 @@ This module uses the ZXing library for decoding QR codes: https://github.com/zxi
 * **Select which descriptive field to append the camera selection (This field will NOT work with the Shazam module):**
 	This field attaches a dropdown list of all the cameras on your device. This field must be a descriptive text field and must be within the selected instrument
 
-* **Select which field to attach a QR camera (Must be a text/notes field):**
+* **Select which field to attach a QR camera (Must be a text field):**
 	This field will have a button attached to it to activate the QrScanner. The decoded text will be returned to this field. 
 	
 * **Camera Width (px):**
