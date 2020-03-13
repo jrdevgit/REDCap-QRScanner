@@ -23,10 +23,10 @@ This module uses the ZXing library for decoding QR codes: https://github.com/zxi
 * **Select which instrument to add the scanner functionality:**
 	There is no limit on how many instruments can have the scanner functionality, however within each instrument, all QrScanner related fields must be on the same page. 
 	
-* **Select which descriptive field to append the camera selection (This field will NOT work with the Shazam module):**
+* **Select which descriptive field to append the camera selection (This field cannot be used in the Shazam module):**
 	This field attaches a dropdown list of all the cameras on your device. This field must be a descriptive text field and must be within the selected instrument
 
-* **Select which field to attach a QR camera (Must be a text field):**
+* **Select which field to attach a QR camera (Must be a text field, can be used in the Shazam module if desired):**
 	This field will have a button attached to it to activate the QrScanner. The decoded text will be returned to this field. 
 	
 * **Camera Width (px):**
