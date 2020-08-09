@@ -59,9 +59,10 @@ class QRScanner extends AbstractExternalModule {
 					}
 				}
 				?>
-				<script type="text/javascript" src="<?php echo $this->getUrl('zxing.js');?>"></script>
+				
 				<script>
 					var QRScanner = QRScanner || {};
+					<?php echo file_get_contents($this->getModulePath() . "zxing.js") ?>;
 					QRScanner.isSurvey = <?php echo json_encode($this->is_survey)?>;
 					QRScanner.camera = <?php echo json_encode($scanner_camera)?>;
 					QRScanner.fields = <?php echo json_encode($scanner_fields)?>;

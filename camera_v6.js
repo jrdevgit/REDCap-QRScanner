@@ -35,14 +35,14 @@ QRScanner.activateCamera = function(i, codeReader, selectedDeviceId) {
 			$(".QRScanner-camera").collapse('hide');
 			QRScanner.isCameraOn[i] = true;
 			$("#"+QRScanner.collapseIDs[i]).collapse('show');
-			QRScanner.temporarilyDisableButtons(codeReader, selectedDeviceId);
+			QRScanner.temporarilyDisableButtons();
 			QRScanner.decodeOnce(codeReader, selectedDeviceId, QRScanner.videoIDs[i], QRScanner.buttonIDs[i], QRScanner.fields[i], QRScanner.collapseIDs[i], QRScanner.numberIDs[i], i);
 			console.log(`Started decode from camera with id ${selectedDeviceId}`);
 
 		} else {
 			codeReader.reset()
 			$(".QRScanner-camera").collapse('hide');
-			QRScanner.temporarilyDisableButtons(codeReader, selectedDeviceId);
+			QRScanner.temporarilyDisableButtons();
 			if (QRScanner.isCameraOn[i] == null || QRScanner.isCameraOn[i] == false) {
 				QRScanner.isCameraOn[i] = true;
 				QRScanner.interruption = true;
@@ -51,7 +51,7 @@ QRScanner.activateCamera = function(i, codeReader, selectedDeviceId) {
 				console.log(`Started decode from camera with id ${selectedDeviceId}`);
 				
 			} else {
-				QRScanner.temporarilyDisableButtons(codeReader, selectedDeviceId);
+				QRScanner.temporarilyDisableButtons();
 				QRScanner.isCameraOn[i] = false;
 			};
 
@@ -61,7 +61,7 @@ QRScanner.activateCamera = function(i, codeReader, selectedDeviceId) {
 	}
 }
 
-QRScanner.temporarilyDisableButtons = function(codeRead, selectedDeviceId) {
+QRScanner.temporarilyDisableButtons = function() {
 	QRScanner.cameraLoaded = false;
 	$('.QRScanner-button').attr('disabled', '');
 	
@@ -141,7 +141,7 @@ QRScanner.decodeOnce = function(codeRead, selectedDeviceId, videoID, buttonID, o
 				alert(textLengthError);
 			}
 			codeRead.reset();
-			QRScanner.temporarilyDisableButtons(codeRead, selectedDeviceId)
+			QRScanner.temporarilyDisableButtons();
 			QRScanner.decodeOnce(codeRead, selectedDeviceId, videoID, buttonID, outputName, collapseID, newCamera, currentI);
 		}
     }).catch((err) => {
@@ -163,7 +163,7 @@ QRScanner.decodeOnce = function(codeRead, selectedDeviceId, videoID, buttonID, o
 			//Due to interruption, i.e. turning on a new camera WHILE the previous camera was still on
 			if (QRScanner.interruption) {
 				QRScanner.resetPreviousCamera();
-				$('#'+collapseID).attr('class', 'collapse');
+				$('#'+collapseID).collapse('hide');
 				//Not interruption, i.e. turning on a new camera that is different to the previous camera
 			} else {
 				QRScanner.isMasterCameraOn = false;
@@ -216,13 +216,16 @@ window.addEventListener('load', function () {
 			$('#'+QRScanner.camera+'-tr').find('td').eq(0).append('<div id="QRScanner-sourceSelectPanel" style="display:none"><label for="QRScanner-sourceSelect">Change video source:</label><select id="QRScanner-sourceSelect" style="max-width:400px"></select></div>');
 	}
     let selectedDeviceId;
-    const codeReader = new ZXing.BrowserQRCodeReader();
+	const codeReader = new ZXing.BrowserQRCodeReader();
+
+	
     console.log('ZXing code reader initialized');
 
-
+	
     codeReader.getVideoInputDevices().then((videoInputDevices) => {
 		var sourceSelect = document.getElementById('QRScanner-sourceSelect');
 		selectedDeviceId = videoInputDevices[0].deviceId;
+		
 		if (videoInputDevices.length >= 1) {
 			videoInputDevices.forEach((element) => {
 				var sourceOption = document.createElement('option');
@@ -230,7 +233,6 @@ window.addEventListener('load', function () {
 				sourceOption.value = element.deviceId;
 				sourceSelect.appendChild(sourceOption);
 			})
-			document.getElementById('QRScanner-sourceSelect').options[0].setAttribute('selected','');
 			sourceSelect.onchange = () => {
 				selectedDeviceId = sourceSelect.value;
 			};
@@ -241,6 +243,7 @@ window.addEventListener('load', function () {
 				selectedDeviceId = document.getElementById('QRScanner-sourceSelect').options[1].value
 				//In most cases the second option is the back camera
 			}
+
 			
 			var sourceSelectPanel = document.getElementById('QRScanner-sourceSelectPanel');
 			sourceSelectPanel.style.display = 'block';
